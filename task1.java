@@ -1,77 +1,57 @@
+import java.util.Arrays;
+import java.util.Random;
 
 public class task1 {
-
-    private static class Node {
-        Node next;
-        int value;
+    public static int GetRandomNum(int n) {
+        return new Random().nextInt(n);
     }
 
-    Node head;
-
-    public void addToHead(int value) {
-        Node newNode = new Node();
-        newNode.value = value;
-        if (head != null)
-            newNode.next = head;
-        head = newNode;
+    public static int GetMaxBitNum(int i) {
+        return Integer.toBinaryString(i).length();
     }
 
-    public void removeFromHead() {
-        if (head != null) {
-            head = head.next;
+    public static int[] GetArrayDiv(int i, int n) {
+        int minDivider = i / n + 1 * ((i % n == 0) ? 0 : 1);
+        int firstElement = minDivider * n;
+        int maxDivider = Short.MAX_VALUE / n;
+        int count = maxDivider - minDivider + 1;
+
+        int[] result = new int[count];
+        int k = firstElement;
+        for (int j = 0; j < result.length; j++) {
+            result[j] = k;
+            k += n;
         }
+        return result;
     }
 
-    public boolean ValueInNodes(int value) {
-        Node currentNode = head;
-        while (currentNode != null) {
-            if (currentNode.value == value)
-                return true;
-            currentNode = currentNode.next;
-        }
-        return false;
-    }
-
-    public void addToTail(int value) {
-        Node newNode = new Node();
-        newNode.value = value;
-        if (head == null)
-            head = Node;
-        else {
-            Node lastNode = head;
-            while (lastNode.next != null) {
-                lastNode = lastNode.next;
+    public static int[] GetArrayInDiv(int i, int n) {
+        int minDivider = -Short.MIN_VALUE / n;
+        int maxDivider = i / n;
+        int count = i - Short.MIN_VALUE - minDivider - maxDivider;
+        int[] result = new int[count];
+        int k = 0;
+        for (int j = Short.MIN_VALUE; j <= i; j++) {
+            if (j % n != 0) {
+                result[k] = j;
+                k++;
             }
-            lastNode.next = newNode;
         }
+        return result;
     }
 
-    public void removeFromTail() {
-        if (head != null) {
-            Node preTailNode = head;
-            while (preTailNode.next != null) {
-                if (preTailNode.next.next == null) {
-                    preTailNode.next = null;
-                    return;
-                }
-                preTailNode = preTailNode.next;
-            }
-            head = null;
-        }
-    }
+    public static void main(String[] args) {
+        int i = GetRandomNum(2000);
+        System.out.println(i); // рандом
 
-    public void reversNodes() {
-        if (head != null && head.next != null)
-            reversNodes(head.next, head);
-    }
+        int n = GetMaxBitNum(i);
+        System.out.println(n); // бит
 
-    private void reversNodes(Node currentNode, Node prevNode) {
-        if (currentNode.next == null) {
-            head = currentNode;
-        } else {
-            reversNodes(currentNode.next, currentNode);
-        }
-        currentNode.next = prevNode;
-        prevNode.next = null;
+        int[] m1 = GetArrayDiv(i, n); // кратные
+        System.out.println(Arrays.toString(m1));
+
+        int[] m2 = GetArrayInDiv(i, n); // не кратные
+        System.out.println(Arrays.toString(m2));
+
     }
 }
