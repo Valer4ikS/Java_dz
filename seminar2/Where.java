@@ -1,28 +1,48 @@
 package seminar2;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.Scanner;
 
 public class Where {
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Map<String, String> params1 = new HashMap<String, String>();
-        params1.put("name", "Ivanov");
-        params1.put("country", "Russia");
-        params1.put("city", "Kaliningrad");
-        params1.put("age", null);
-        System.out.println(getQuery(params1));
+        String head = "select * from students where ";
+        StringBuilder sb = new StringBuilder(head);
+        StringBuilder words = new StringBuilder("name: , country: , city: , age: ");
+
+        System.out.println(getSB(sb, words));
+
     }
 
-    public static String getQuery(Map<String, String> params) {
-        StringBuilder s = new StringBuilder();
-        for (Map.Entry<String, String> pair : params.entrySet()) {
-            if (pair.getValue() != null) {
-                s.append(pair.getKey() + " = '" + pair.getValue() + "' and ");
-            }
+    public static void prompt(StringBuilder sb, StringBuilder wrds) {
+        sb.append(wrds.toString());
+        System.out.println(sb);
+    }
+
+    public static void Request(int count) {
+        switch (count) {
+            case 0:
+                System.out.println("Enter a name: ");
+                break;
+            case 1:
+                System.out.println("Enter a country: ");
+                break;
+            case 2:
+                System.out.println("Enter a city: ");
+                break;
+            case 3:
+                System.out.println("Enter a age: ");
+                break;
         }
-        s.delete(s.toString().length() - 5, s.toString().length());
-        return s.toString();
     }
 
+    public static StringBuilder getSB(StringBuilder sb, StringBuilder words) {
+        // + result
+        for (int i = 0; i < 4; i++) {
+            Request(i);
+            String word = scanner.nextLine();
+            sb.append(word + " ");
+        }
+        return sb;
+    }
 }
